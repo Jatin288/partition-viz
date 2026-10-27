@@ -67,10 +67,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("""
     <div style="font-size:0.8rem;color:#8b949e;line-height:1.5">
-      <b>Course</b>: Independent Project (IP)<br>
+      <b>Project</b>: Independent Project (IP)<br>
+      <b>Author</b>: Jatin Pawar · 2024279<br>
       <b>Primary Text</b>: G. E. Andrews (1976/1998)<br>
-      <b>Verification</b>: 50 / 50 Unit Tests Passing<br>
-      <b>Milestone</b>: Chapters 1 & 2 Completed
+      <b>Scope</b>: Selected Results from Ch. 1–2
     </div>
     """, unsafe_allow_html=True)
 

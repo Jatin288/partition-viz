@@ -1,0 +1,115 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\title{\textbf{PartitionViz: Computational and Interactive Investigations in the Theory of Partitions}\\
+\large Independent Project (IP) Progress Report --- Selected Results from Chapters 1 \& 2}
+\author{\textbf{Jatin Pawar} (Roll No. 2024279)\\
+Independent Project (IP)}
+\date{Academic Year 2026}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present \textbf{PartitionViz}, an interactive computational mathematics laboratory designed to investigate the combinatorial bijections, geometric involutions, and generating function identities presented in George E. Andrews's \emph{The Theory of Partitions} (Cambridge University Press). The framework comprises three implemented research modules: (1) Ferrers diagram transposition and the bounded partition duality of Andrews's Theorem 1.4, including Sylvester's hook unfolding for self-conjugate partitions; (2) Franklin's sign-reversing involution (1881) demonstrating exact parity cancellation in Euler's pentagonal number series $\prod_{k=1}^\infty (1-q^k)$ and powering Euler's $O(N\sqrt{N})$ recurrence for $p(n)$; and (3) Series-product identities from Chapter 2, including formal power series arithmetic in $\mathbb{Z}[[q]]$, Andrews Theorem 2.1 ($q$-binomial theorem) with Euler's partition corollaries, and the Durfee square series expansion $\sum_{d=0}^\infty \frac{q^{d^2}}{(q; q)_d^2} = \sum p(n) q^n$. The system features an independent mathematical engine verified by an automated unit test suite in \texttt{pytest}, interactive visualizations with step-by-step geometric transformations, and defensible computational findings.
+\end{abstract}
+
+\section{Introduction and Theoretical Scope}
+The theory of integer partitions, initiated systematically by Leonhard Euler in 1748, is foundational to modern combinatorics, representation theory, and modular forms \cite{andrews1976}. A \textbf{partition} of a positive integer $n$ is a finite non-increasing sequence of positive integers:
+\begin{equation}
+\lambda = (\lambda_1, \lambda_2, \dots, \lambda_r), \quad \lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_r > 0, \quad \sum_{i=1}^r \lambda_i = n.
+\end{equation}
+The number of partitions of $n$ is denoted by $p(n)$, with generating function:
+\begin{equation}
+\sum_{n=0}^\infty p(n) q^n = \prod_{k=1}^\infty \frac{1}{1 - q^k}.
+\end{equation}
+Our computational laboratory implements the rigorous cycle:
+\begin{equation*}
+\text{Theorem} \longrightarrow \text{Algorithmic Engine} \longrightarrow \text{Computational Experiment} \longrightarrow \text{Deduction}.
+\end{equation*}
+
+\section{Module 1: Ferrers Graphs and Conjugation Duality}
+
+\subsection{Conjugation Involution and Theorem 1.4}
+For a partition $\lambda$, the \textbf{Ferrers diagram} represents $\lambda$ as an array of dots with $\lambda_i$ dots in row $i$. The \textbf{conjugate partition} $\lambda' = (\lambda'_1, \dots, \lambda'_m)$ is defined by $\lambda'_i = \#\{j : \lambda_j \ge i\}$.
+
+\begin{theorem}[Andrews, Theorem 1.4, p.~8]
+The number of partitions of $n$ into at most $m$ parts equals the number of partitions of $n$ whose largest part is at most $m$.
+\end{theorem}
+Conjugation $\lambda \mapsto \lambda'$ provides an explicit bijection. Verified exhaustively across $1 \le n \le 20, 1 \le m \le 6$.
+
+\subsection{Sylvester's Theorem}
+\begin{theorem}[Sylvester 1882; Andrews Ch.~1, Ex.~8]
+The number of self-conjugate partitions ($\lambda = \lambda'$) of $n$ equals the number of partitions of $n$ into distinct odd parts.
+\end{theorem}
+Unfolding symmetric diagonal hooks $(2h_i + 1)$ yields strictly decreasing odd integers. Verified for all $n \le 35$.
+
+\section{Module 2: Franklin's Involution and Euler's Recurrence}
+
+\subsection{Franklin's Sign-Reversing Involution}
+Let $D(n)$ denote partitions into distinct parts. Franklin defines base $b = \lambda_r$ and slope $s = \max\{s : \lambda_i = \lambda_1 - (i-1)\}$.
+
+\begin{theorem}[Franklin 1881; Andrews Theorem 1.6, p.~11]
+Franklin's map $\phi : D(n) \to D(n)$ pairs partitions of opposite length $(\ell \to \ell \pm 1)$ except when $r = s$ and either $b = s$ or $b = s + 1$, corresponding to generalized pentagonal numbers $\omega(\pm k) = \frac{3k^2 \mp k}{2}$.
+\end{theorem}
+This establishes the combinatorial cancellation:
+\begin{equation}
+\prod_{k=1}^\infty (1 - q^k) = 1 + \sum_{k=1}^\infty (-1)^k \left[ q^{\omega(k)} + q^{\omega(-k)} \right].
+\end{equation}
+
+\subsection{Euler's Recurrence}
+\begin{corollary}[Andrews Corollary 1.8, p.~12]
+For $n > 0$,
+\begin{equation}
+p(n) = \sum_{k \ge 1} (-1)^{k+1} \left[ p\left(n - \frac{3k^2-k}{2}\right) + p\left(n - \frac{3k^2+k}{2}\right) \right].
+\end{equation}
+\end{corollary}
+Computing $p(n)$ given history requires $O(\sqrt{n})$ terms; generating the table up to $N$ requires $O(N\sqrt{N})$ additions.
+
+\section{Module 3: Series-Product Identities and Andrews Theorem 2.1}
+
+\subsection{Formal Power Series Stabilization}
+In $\mathbb{Z}[[q]]$, expanding $M \ge N$ factors of an infinite product $\prod_{k=1}^\infty (1 + c_k q^k)$ yields the exact integer coefficient of $q^n$ for all $0 \le n \le N$.
+
+\subsection{The $q$-Binomial Theorem and Euler Corollaries}
+\begin{theorem}[Andrews Theorem 2.1, p.~17]
+For $|q| < 1, |t| < 1$:
+\begin{equation}
+\sum_{n=0}^\infty \frac{(a; q)_n}{(q; q)_n} t^n = \frac{(at; q)_\infty}{(t; q)_\infty}.
+\end{equation}
+\end{theorem}
+Setting $a = 0, t = q$ yields Euler's Corollary 2.2: $\sum_{n=0}^\infty \frac{q^n}{(q; q)_n} = \frac{1}{(q; q)_\infty} = \sum p(n) q^n$.
+Taking $a \to \infty, t = q$ yields Euler's Corollary 2.3: $\sum_{n=0}^\infty \frac{q^{n(n+1)/2}}{(q; q)_n} = (-q; q)_\infty = \sum p(D, n) q^n$.
+
+\subsection{Durfee Square Expansion}
+\begin{equation}
+\sum_{n=0}^\infty p(n) q^n = \sum_{d=0}^\infty \frac{q^{d^2}}{(q; q)_d^2}.
+\end{equation}
+Summing up to $d_{\max}$ captures 100\% of partitions for $n < (d_{\max}+1)^2$.
+
+\begin{thebibliography}{9}
+\bibitem{andrews1976}
+G.~E.~Andrews, \emph{The Theory of Partitions}, Cambridge University Press, 1976/1998.
+\bibitem{euler1748}
+L.~Euler, \emph{Introductio in Analysin Infinitorum}, Vol.~1, Lausanne, 1748.
+\bibitem{franklin1881}
+F.~Franklin, Sur le d{\'e}veloppement du produit infini $(1-x)(1-x^2)\dots$, \emph{C. R. Acad. Sci. Paris}, 92:448--450, 1881.
+\bibitem{sylvester1882}
+J.~J.~Sylvester, A Constructive Theory of Partitions, \emph{Amer. J. Math.}, 5(1):251--330, 1882.
+\end{thebibliography}
+
+\end{document}

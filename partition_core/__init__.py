@@ -44,6 +44,9 @@ from .generating_functions import (
     expand_odd_partitions_gf,
     expand_durfee_square_series,
     durfee_decomposition,
+    durfee_completeness_bound,
+    expand_euler_first_identity,
+    expand_euler_second_identity,
 )
 
 __all__ = [
@@ -80,6 +83,9 @@ __all__ = [
     "expand_odd_partitions_gf",
     "expand_durfee_square_series",
     "durfee_decomposition",
+    "durfee_completeness_bound",
+    "expand_euler_first_identity",
+    "expand_euler_second_identity",
 ]
 
 

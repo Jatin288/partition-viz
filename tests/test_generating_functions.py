@@ -109,3 +109,46 @@ def test_durfee_decomposition_invariants():
                 assert lambda_B[0] <= d
             # Total sum reconstructed
             assert d * d + sum(lambda_R) + sum(lambda_B) == n
+
+
+def test_durfee_completeness_bound_and_deficit():
+    """
+    Test the exact mathematical completeness threshold:
+    When d_max < floor(sqrt(N)), coefficients are exact for n < (d_max + 1)^2
+    and have a strict deficit at n = (d_max + 1)^2.
+    """
+    from partition_core.generating_functions import durfee_completeness_bound
+
+    # With d_max = 2, bound = (2+1)^2 - 1 = 8.
+    info = durfee_completeness_bound(max_d=2, max_deg=15)
+    assert info["is_complete"] is False
+    assert info["exact_up_to_degree"] == 8
+    assert info["first_incomplete_degree"] == 9
+
+    # Check series expansion matches p(n) up to n=8, and has deficit at n=9
+    poly_d2 = expand_durfee_square_series(max_d=2, max_deg=15)
+    for n in range(9):
+        assert poly_d2[n] == partition_count(n), f"Mismatch at degree {n} for d_max=2"
+    # At degree 9, partition (3, 3, 3) has Durfee side 3, so it is omitted from d <= 2!
+    assert poly_d2[9] < partition_count(9), "Expected deficit at n=9 for d_max=2"
+
+
+def test_q_binomial_euler_corollaries():
+    """
+    Test Andrews Theorem 2.1 limiting corollaries:
+    - Corollary 2.2: sum q^n / (q; q)_n expands to p(n)
+    - Corollary 2.3: sum q^(n(n+1)/2) / (q; q)_n expands to p(D, n)
+    """
+    from partition_core.generating_functions import expand_euler_first_identity, expand_euler_second_identity
+
+    max_deg = 20
+    # Corollary 2.2
+    c22_coeffs = expand_euler_first_identity(max_n=max_deg, max_deg=max_deg)
+    for n in range(max_deg + 1):
+        assert c22_coeffs[n] == partition_count(n), f"Corollary 2.2 mismatch at degree {n}"
+
+    # Corollary 2.3
+    c23_coeffs = expand_euler_second_identity(max_n=10, max_deg=max_deg)
+    for n in range(max_deg + 1):
+        assert c23_coeffs[n] == len(partitions_distinct(n)), f"Corollary 2.3 mismatch at degree {n}"
+

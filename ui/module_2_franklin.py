@@ -37,7 +37,7 @@ def render_module_2():
       <div class="academic-hero-title">Franklin's Involution & Euler's Pentagonal Theorem</div>
       <div class="academic-hero-subtitle">
         Investigating the combinatorial sign-reversing involution on distinct partitions,
-        exact parity cancellation in the infinite product $\prod(1-q^k)$, and Euler's recurrence for $p(n)$.
+        exact parity cancellation in Euler's pentagonal product ∏ (1 - qᵏ), and Euler's recurrence for p(n).
       </div>
     </div>
     """, unsafe_allow_html=True)

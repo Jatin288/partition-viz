@@ -203,3 +203,80 @@ def durfee_decomposition(lam: Partition) -> dict:
         "sum_B": sum_B,
         "verified": total_reconstructed == sum(lam),
     }
+
+
+def durfee_completeness_bound(max_d: int, max_deg: int) -> dict:
+    """
+    Determine the exact degree range where summing Durfee side up to max_d
+    guarantees mathematical completeness against the unrestricted partition count p(n).
+
+    A partition has Durfee square side d >= max_d + 1 only if n >= (max_d + 1)^2.
+    Therefore, the truncated sum sum_{d=0}^{max_d} q^(d^2) / (q; q)_d^2 covers
+    100% of all partitions of n for all 0 <= n < (max_d + 1)^2.
+
+    If (max_d + 1)^2 <= max_deg, degrees n >= (max_d + 1)^2 have strict deficits
+    due to omitted partitions with Durfee side d > max_d.
+    """
+    min_required_d = int(math.isqrt(max_deg))
+    exact_upper_bound = (max_d + 1) ** 2 - 1
+    is_complete = exact_upper_bound >= max_deg
+
+    return {
+        "max_d": max_d,
+        "max_deg": max_deg,
+        "min_required_d": min_required_d,
+        "exact_up_to_degree": min(exact_upper_bound, max_deg),
+        "first_incomplete_degree": exact_upper_bound + 1 if not is_complete else None,
+        "is_complete": is_complete,
+    }
+
+
+def expand_euler_first_identity(max_n: int, max_deg: int) -> list[int]:
+    """
+    Euler's First Identity (Andrews Chapter 2, Corollary 2.2, p. 19; special case a=0 of q-binomial):
+        sum_{n=0}^inf  t^n / (q; q)_n = 1 / (t; q)_inf.
+    Setting t = q yields the partition generating function sorted by largest part n:
+        sum_{n=0}^inf  q^n / (q; q)_n = 1 / (q; q)_inf = sum_{k=0}^inf p(k) q^k.
+    Each term q^n / (q; q)_n is the generating function for partitions with largest part equal to n.
+    """
+    total = [0] * (max_deg + 1)
+    # n=0 term is 1
+    total[0] = 1
+    for n in range(1, max_n + 1):
+        if n > max_deg:
+            break
+        # Numerator: q^n
+        term = [0] * (max_deg + 1)
+        term[n] = 1
+        # Denominator: (q; q)_n = (1-q)(1-q^2)...(1-q^n)
+        for j in range(1, n + 1):
+            term = poly_div_by_1_minus_q_k(term, j, max_deg)
+        total = poly_add(total, term)
+    return total[: max_deg + 1]
+
+
+def expand_euler_second_identity(max_n: int, max_deg: int) -> list[int]:
+    """
+    Euler's Second Identity (Andrews Chapter 2, Corollary 2.3, p. 19; limit a->inf of q-binomial):
+        sum_{n=0}^inf  q^(n(n-1)/2) t^n / (q; q)_n = (-t; q)_inf.
+    Setting t = q yields the distinct-part partition generating function sorted by number of parts n:
+        sum_{n=0}^inf  q^(n(n+1)/2) / (q; q)_n = (-q; q)_inf = sum_{k=0}^inf p(D, k) q^k.
+    Each term q^(n(n+1)/2) / (q; q)_n corresponds to partitions into exactly n distinct parts,
+    decomposed into a minimal triangular staircase delta_n plus at most n parts.
+    """
+    total = [0] * (max_deg + 1)
+    # n=0 term is 1
+    total[0] = 1
+    for n in range(1, max_n + 1):
+        tri_n = n * (n + 1) // 2
+        if tri_n > max_deg:
+            break
+        # Numerator: q^(n(n+1)/2)
+        term = [0] * (max_deg + 1)
+        term[tri_n] = 1
+        # Denominator: (q; q)_n
+        for j in range(1, n + 1):
+            term = poly_div_by_1_minus_q_k(term, j, max_deg)
+        total = poly_add(total, term)
+    return total[: max_deg + 1]
+
