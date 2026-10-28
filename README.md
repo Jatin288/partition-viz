@@ -1,6 +1,6 @@
 # PartitionViz: Computational Laboratory for the Theory of Partitions
 
-**Independent Project (IP) · Jatin Pawar · 2024279**  
+**Independent Project (IP) · Jatin Pawar · 2024279 · IIIT Delhi**  
 **Primary Mathematical Source**: George E. Andrews, *The Theory of Partitions* (Cambridge University Press, 1976/1998)  
 **Live Deployed Application**: [https://partition-viz-jatin.streamlit.app/](https://partition-viz-jatin.streamlit.app/)  
 **GitHub Repository**: [https://github.com/jatin288/partition-viz](https://github.com/jatin288/partition-viz)  

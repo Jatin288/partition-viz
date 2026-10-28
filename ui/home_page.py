@@ -12,15 +12,21 @@ def render_home_page():
     st.markdown("""
     <div class="academic-hero">
       <div style="margin-bottom:0.6rem">
-        <span class="academic-badge badge-blue">Independent Project (IP) · Jatin Pawar · 2024279</span>
-        <span class="academic-badge badge-green">Andrews Chapters 1 &amp; 2</span>
-        <span class="academic-badge badge-purple">Exact Arithmetic Engine</span>
+        <span class="academic-badge badge-blue">Independent Project (IP)</span>
+        <span class="academic-badge badge-green">Jatin Pawar · 2024279 · IIIT Delhi</span>
+        <span class="academic-badge badge-amber">Selected Results from Ch. 1–2</span>
       </div>
       <div class="academic-hero-title">PartitionViz: Computational Laboratory</div>
       <div class="academic-hero-subtitle">
         An interactive computational laboratory for the theory of partitions, investigating combinatorial bijections,
         geometric involutions, and series-product generating functions based on George E. Andrews, 
         <em>The Theory of Partitions</em> (1976/1998).
+      </div>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:#8b949e">
+        <strong style="color:#c9d1d9">Author:</strong> Jatin Pawar &nbsp;·&nbsp;
+        <strong style="color:#c9d1d9">Roll No:</strong> 2024279 &nbsp;·&nbsp;
+        <strong style="color:#c9d1d9">Institution:</strong> IIIT Delhi &nbsp;·&nbsp;
+        <strong style="color:#c9d1d9">Project:</strong> Independent Project (IP)
       </div>
     </div>
     """, unsafe_allow_html=True)

@@ -1,7 +1,7 @@
 # Independent Project (IP) Progress Report
 ## PartitionViz: Computational & Interactive Foundations in the Theory of Partitions
 
-**Student**: Jatin Pawar · 2024279  
+**Student**: Jatin Pawar · 2024279 · IIIT Delhi  
 **Topic**: Theory of Partitions (Based on George E. Andrews, *The Theory of Partitions*, Cambridge University Press)  
 **Project**: Independent Project (IP)  
 **Primary Text**: G. E. Andrews (1976/1998)  

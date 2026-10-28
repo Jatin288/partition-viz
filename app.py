@@ -69,6 +69,7 @@ with st.sidebar:
     <div style="font-size:0.8rem;color:#8b949e;line-height:1.5">
       <b>Project</b>: Independent Project (IP)<br>
       <b>Author</b>: Jatin Pawar · 2024279<br>
+      <b>Institution</b>: IIIT Delhi<br>
       <b>Primary Text</b>: G. E. Andrews (1976/1998)<br>
       <b>Scope</b>: Selected Results from Ch. 1–2
     </div>
