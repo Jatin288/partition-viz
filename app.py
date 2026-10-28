@@ -13,6 +13,22 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 import streamlit as st
+import importlib
+import ui.styles
+import ui.home_page
+import ui.module_1_conjugation
+import ui.module_2_franklin
+import ui.module_3_series_identities
+import ui.theory_dossier
+
+# Ensure fresh imports across Streamlit reruns
+importlib.reload(ui.styles)
+importlib.reload(ui.home_page)
+importlib.reload(ui.module_1_conjugation)
+importlib.reload(ui.module_2_franklin)
+importlib.reload(ui.module_3_series_identities)
+importlib.reload(ui.theory_dossier)
+
 from ui.styles import inject_academic_styles
 from ui.home_page import render_home_page
 from ui.module_1_conjugation import render_module_1
