@@ -212,11 +212,10 @@ def render_module_1():
             cnt_max_part = res_t["count_max_part_m"]
 
             st.markdown(f"""
-            <div class="metric-box">
+            <div class="metric-box" style="margin-bottom:0.8rem">
               <div class="metric-box-val">{cnt_at_most}</div>
               <div class="metric-box-lbl">Partitions of {n_t} with ≤ {m_t} parts</div>
             </div>
-            <br>
             <div class="metric-box">
               <div class="metric-box-val">{cnt_max_part}</div>
               <div class="metric-box-lbl">Partitions of {n_t} with max part ≤ {m_t}</div>
@@ -268,7 +267,7 @@ def render_module_1():
             reference="Andrews, The Theory of Partitions, Chapter 1, Example 8, p. 17",
             statement_md=(
                 "A partition is **self-conjugate** if $\\lambda = \\lambda'$ (its Ferrers diagram is symmetric across "
-                "the main diagonal).<br>"
+                "the main diagonal).\n\n"
                 "**Theorem:** For every positive integer $n$, the number of self-conjugate partitions of $n$ "
                 "equals the number of partitions of $n$ into **distinct odd parts**."
             ),
@@ -341,9 +340,9 @@ def render_module_1():
             reference="The Theory of Partitions, p. 28",
             statement_md=(
                 "The **Durfee square** of a partition $\\lambda$ is the largest $d \\times d$ square of dots contained "
-                "within its Ferrers diagram. Every partition can be uniquely decomposed into three disjoint components:<br>"
-                "1. The $d \\times d$ Durfee square (containing $d^2$ dots).<br>"
-                "2. A partition $\\lambda_R$ of dots to the right (having at most $d$ parts).<br>"
+                "within its Ferrers diagram. Every partition can be uniquely decomposed into three disjoint components:\n\n"
+                "1. The $d \\times d$ Durfee square (containing $d^2$ dots).\n"
+                "2. A partition $\\lambda_R$ of dots to the right (having at most $d$ parts).\n"
                 "3. A partition $\\lambda_B$ of dots below (having parts at most $d$)."
             ),
             equation_latex=r"\sum_{n=0}^\infty p(n) q^n = \sum_{d=0}^\infty \frac{q^{d^2}}{(1-q)^2 (1-q^2)^2 \dots (1-q^d)^2}",
@@ -440,9 +439,9 @@ def render_module_1():
         render_defensible_findings(
             module_title="Module 1 — Ferrers Diagrams & Conjugation Duality",
             questions_md=(
-                "(a) How does Ferrers diagram reflection establish an exact bijection between row-bounded and column-bounded partition sets?<br>"
-                "(b) What structural property characterizes the fixed points of conjugation ($\\lambda = \\lambda'$), and how does their proportion behave asymptotically as $n \\to \\infty$?<br>"
-                "(c) How does the Durfee square decomposition provide an exact combinatorial proof of Andrews's Chapter 2 series-product identity?"
+                "1. How does Ferrers diagram reflection establish an exact bijection between row-bounded and column-bounded partition sets?\n\n"
+                "2. What structural property characterizes the fixed points of conjugation ($\\lambda = \\lambda'$), and how does their proportion behave asymptotically as $n \\to \\infty$?\n\n"
+                "3. How does the Durfee square decomposition provide an exact combinatorial proof of Andrews's Chapter 2 series-product identity?"
             ),
             foundation_md=(
                 "George E. Andrews, *The Theory of Partitions* (Cambridge University Press), Chapter 1, Section 1.3, "
@@ -456,18 +455,18 @@ def render_module_1():
                 "Durfee decomposition partitions each graph into $d^2$, $\\lambda_R$, and $\\lambda_B$ components."
             ),
             deductions_md=(
-                "• **Geometric Duality:** The numerical equality $p(\\le m\\text{ parts}, n) = p(\\text{max part}\\le m, n)$ "
-                "is proven to be a geometric identity: transposing the bounding rectangle $[r \\le m, c \\le n]$ yields $[r \\le n, c \\le m]$.<br>"
-                "• **Exponential Decay of Symmetry:** While total partitions grow as $p(n) \\sim \\frac{1}{4n\\sqrt{3}}e^{\\pi\\sqrt{2n/3}}$, "
+                "- **Geometric Duality:** The numerical equality $p(\\le m\\text{ parts}, n) = p(\\text{max part}\\le m, n)$ "
+                "is proven to be a geometric identity: transposing the bounding rectangle $[r \\le m, c \\le n]$ yields $[r \\le n, c \\le m]$.\n\n"
+                "- **Exponential Decay of Symmetry:** While total partitions grow as $p(n) \\sim \\frac{1}{4n\\sqrt{3}}e^{\\pi\\sqrt{2n/3}}$, "
                 "self-conjugate partitions grow at rate $e^{\\pi\\sqrt{n/3}}$. The proportion of symmetric partitions decays to zero "
-                "at asymptotic rate $e^{-\\pi(\\sqrt{2}-1)\\sqrt{n/3}}$. A random large partition is almost never symmetric.<br>"
-                "• **Durfee Limit Law:** The side length $d(\\lambda)$ satisfies $d(\\lambda) = d(\\lambda')$, and its expected value scales as "
-                "$\\frac{\\sqrt{6}\\ln 2}{\\pi}\\sqrt{n} \\approx 0.5407\\sqrt{n}$, linking discrete Ferrers geometry to the Vershik-Kerov limit curve.<br>"
-                "• **Chapter 2 Series Equivalence:** Every partition decomposes uniquely into a $d^2$ square, a partition with $\\le d$ parts, and a partition with parts $\\le d$, "
+                "at asymptotic rate $e^{-\\pi(\\sqrt{2}-1)\\sqrt{n/3}}$. A random large partition is almost never symmetric.\n\n"
+                "- **Durfee Limit Law:** The side length $d(\\lambda)$ satisfies $d(\\lambda) = d(\\lambda')$, and its expected value scales as "
+                "$\\frac{\\sqrt{6}\\ln 2}{\\pi}\\sqrt{n} \\approx 0.5407\\sqrt{n}$, linking discrete Ferrers geometry to the Vershik-Kerov limit curve.\n\n"
+                "- **Chapter 2 Series Equivalence:** Every partition decomposes uniquely into a $d^2$ square, a partition with $\\le d$ parts, and a partition with parts $\\le d$, "
                 "proving combinatorially that $\\sum_{n=0}^\\infty p(n) q^n = \\sum_{d=0}^\\infty \\frac{q^{d^2}}{(q; q)_d^2}$."
             ),
             validation_md=(
-                "Verified by 50 automated tests in `tests/test_conjugation.py`, `tests/test_enumeration.py`, and `tests/test_generating_functions.py`, "
+                "Verified by automated unit tests in `tests/test_conjugation.py`, `tests/test_enumeration.py`, and `tests/test_generating_functions.py`, "
                 "including sum preservation, involution symmetry, Sylvester hook unfolding, and Durfee square coefficient agreement."
             ),
             limitations_md=(

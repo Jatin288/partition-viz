@@ -110,10 +110,10 @@ def render_module_2():
             statement_md=(
                 "For $\\lambda \\in D(n)$, define the **base** $b = \\lambda_r$ (smallest part, bottom row) and the "
                 "**slope** $s = \\max\\{s : \\lambda_i = \\lambda_1 - (i-1) \\text{ for } 1 \\le i \\le s\\}$ "
-                "(the consecutive 45° diagonal line of dots starting at the top right).<br><br>"
-                "• **Case 1 ($b \\le s$):** Delete the bottom row $b$ and add 1 dot to each of the first $b$ rows. Length: $\\ell \\to \\ell - 1$.<br>"
-                "• **Case 2 ($b > s$):** Subtract 1 dot from each of the first $s$ rows and append a new bottom row of length $s$. Length: $\\ell \\to \\ell + 1$.<br>"
-                "• **Exceptional Cases ($s = r$):** When the base meets the slope, the move fails if $b = s$ (giving $n = \\omega(k)$) "
+                "(the consecutive 45° diagonal line of dots starting at the top right).\n\n"
+                "- **Case 1 ($b \\le s$):** Delete the bottom row $b$ and add 1 dot to each of the first $b$ rows. Length: $\\ell \\to \\ell - 1$.\n"
+                "- **Case 2 ($b > s$):** Subtract 1 dot from each of the first $s$ rows and append a new bottom row of length $s$. Length: $\\ell \\to \\ell + 1$.\n"
+                "- **Exceptional Cases ($s = r$):** When the base meets the slope, the move fails if $b = s$ (giving $n = \\omega(k)$) "
                 "or $b = s + 1$ (giving $n = \\omega(-k)$)."
             ),
             equation_latex=r"\omega(k) = \frac{k(3k-1)}{2}, \quad \omega(-k) = \frac{k(3k+1)}{2}, \quad k \in \{1, 2, 3, \dots\}",
@@ -143,28 +143,18 @@ def render_module_2():
             st.markdown("#### Transformation Action")
             if f_det["is_exceptional"]:
                 k_val = f_det["k_index"]
-                st.markdown(f"""
-                <div style="background:#2a1b0a;border:1px solid #f0883e;border-radius:8px;padding:0.9rem">
-                  <b style="color:#f0883e">⭐ EXCEPTIONAL PARTITION (Fixed Point)</b><br>
-                  <span style="font-size:0.88rem;color:#c9d1d9">
-                    Case: <code>{f_det['exceptional_case']}</code> with k = {k_val}.<br>
-                    n = {f_det['n']} is the Generalized Pentagonal Number <strong>ω({k_val})</strong>.<br>
-                    Neither transformation can be applied without violating distinctness.
-                  </span>
-                </div>
-                """, unsafe_allow_html=True)
+                with st.container(border=True):
+                    st.markdown(f"**⭐ EXCEPTIONAL PARTITION (Fixed Point)**\n\n"
+                                f"Case: `{f_det['exceptional_case']}` with $k = {k_val}$.\n\n"
+                                f"$n = {f_det['n']}$ is the Generalized Pentagonal Number **$\\omega({k_val})$**.\n\n"
+                                f"Neither transformation can be applied without violating distinctness.")
             else:
                 act = f_det["action"]
                 act_str = f"Move base ({f_det['b']} dots) to slope" if act == "move_base_to_slope" else f"Move slope ({f_det['s']} dots) to new base"
-                st.markdown(f"""
-                <div style="background:#132337;border:1px solid #388bfd;border-radius:8px;padding:0.9rem">
-                  <b style="color:#79c0ff">✓ REGULAR PAIRING MOVE</b><br>
-                  <span style="font-size:0.88rem;color:#c9d1d9">
-                    Action: <strong>{act_str}</strong>.<br>
-                    Resulting length: <strong>{len(f_det['target'])}</strong> (parity toggles!).
-                  </span>
-                </div>
-                """, unsafe_allow_html=True)
+                with st.container(border=True):
+                    st.markdown(f"**✓ REGULAR PAIRING MOVE**\n\n"
+                                f"Action: **{act_str}**.\n\n"
+                                f"Resulting length: **{len(f_det['target'])}** (parity toggles!).")
 
         with col_f_diag:
             st.plotly_chart(
@@ -192,7 +182,7 @@ def render_module_2():
             statement_md=(
                 "In the expansion of the infinite product $(1-q)(1-q^2)(1-q^3)\\dots$, the coefficient of $q^n$ is "
                 "given by $p_e(D, n) - p_o(D, n)$, where $p_e$ (resp. $p_o$) is the number of partitions of $n$ into "
-                "an even (resp. odd) number of distinct parts.<br><br>"
+                "an even (resp. odd) number of distinct parts.\n\n"
                 "Because Franklin's involution pairs each even partition with an odd partition of identical sum, "
                 "the difference vanishes identically, **except** when $n = \\omega(\\pm k)$ is pentagonal, where "
                 "the surviving exceptional partition contributes $(-1)^k$."
@@ -210,16 +200,14 @@ def render_module_2():
             diff_pe_po = len(pe_list) - len(po_list)
 
             st.markdown(f"""
-            <div class="metric-box">
+            <div class="metric-box" style="margin-bottom:0.8rem">
               <div class="metric-box-val" style="color:#79c0ff">{len(pe_list)}</div>
               <div class="metric-box-lbl">p_e(D, {n_eval}) — Even Parts</div>
             </div>
-            <br>
-            <div class="metric-box">
+            <div class="metric-box" style="margin-bottom:0.8rem">
               <div class="metric-box-val" style="color:#d2a8ff">{len(po_list)}</div>
               <div class="metric-box-lbl">p_o(D, {n_eval}) — Odd Parts</div>
             </div>
-            <br>
             <div class="metric-box" style="border-color:{'#f0883e' if diff_pe_po != 0 else '#3fb950'}">
               <div class="metric-box-val" style="color:{'#f0883e' if diff_pe_po != 0 else '#3fb950'}">{diff_pe_po:+d}</div>
               <div class="metric-box-lbl">Surviving Residue: p_e - p_o</div>
@@ -385,10 +373,10 @@ def render_module_2():
         render_defensible_findings(
             module_title="Module 2 — Franklin's Involution & Pentagonal Numbers",
             questions_md=(
-                "(a) How does Franklin's involution account for the dramatic cancellation of distinct partitions in $\\prod_{k=1}^\\infty (1-q^k)$?<br>"
-                "(b) What geometric conditions create the exceptional fixed points, and why do their indices correspond precisely "
-                "to the generalized pentagonal numbers $\\omega(\\pm k) = \\frac{3k^2 \\mp k}{2}$?<br>"
-                "(c) How does this combinatorial proof translate into an $O(n\\sqrt{n})$ computational reduction for evaluating $p(n)$?"
+                "1. How does Franklin's involution account for the dramatic cancellation of distinct partitions in $\\prod_{k=1}^\\infty (1-q^k)$?\n\n"
+                "2. What geometric conditions create the exceptional fixed points, and why do their indices correspond precisely "
+                "to the generalized pentagonal numbers $\\omega(\\pm k) = \\frac{3k^2 \\mp k}{2}$?\n\n"
+                "3. How does this combinatorial proof translate into an $O(n\\sqrt{n})$ computational reduction for evaluating $p(n)$?"
             ),
             foundation_md=(
                 "George E. Andrews, *The Theory of Partitions* (Cambridge University Press), Chapter 1, Section 1.3, "
@@ -402,13 +390,13 @@ def render_module_2():
                 "The recurrence for $p(n)$ is evaluated via cached dynamic programming table lookups in $O(\\sqrt{n})$ additions per term."
             ),
             deductions_md=(
-                "• **Near-Complete Cancellation:** Out of thousands of partitions into distinct parts, "
+                "- **Near-Complete Cancellation:** Out of thousands of partitions into distinct parts, "
                 "the difference $p_e(D,n) - p_o(D,n)$ is identically 0 for non-pentagonal integers. "
-                "Even for pentagonal numbers, the surviving residue is strictly $\\pm 1$.<br>"
-                "• **Asymptotic Sparsity of Residues:** Because pentagonal numbers grow quadratically "
+                "Even for pentagonal numbers, the surviving residue is strictly $\\pm 1$.\n\n"
+                "- **Asymptotic Sparsity of Residues:** Because pentagonal numbers grow quadratically "
                 "($\\omega(k) \\approx \\frac{3}{2}k^2$), their density up to $N$ is $O(\\sqrt{N})$. "
-                "Hence, asymptotically 100% of integers have equal numbers of even and odd distinct partitions.<br>"
-                "• **Computational Complexity Leap:** Computing $p(100) = 190,569,292$ by naive enumeration requires "
+                "Hence, asymptotically 100% of integers have equal numbers of even and odd distinct partitions.\n\n"
+                "- **Computational Complexity Leap:** Computing $p(100) = 190,569,292$ by naive enumeration requires "
                 "hundreds of millions of operations. Using Franklin's recurrence, $p(100)$ is computed in under 1 millisecond "
                 "using only 15 pentagonal lookup additions."
             ),

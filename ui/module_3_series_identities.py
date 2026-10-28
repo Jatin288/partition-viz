@@ -162,11 +162,10 @@ def render_module_3():
             with st.container(border=True):
                 st.markdown("#### Corollary 2.2 (Euler, 1748)")
                 st.markdown("Set $a = 0$ in Theorem 2.1:")
-                st.latex(r"\sum_{n=0}^\infty \frac{t^n}{(q; q)_n} = \frac{1}{(t; q)_\infty}")
                 st.markdown(
-                    "Setting $t = q$ yields $\\sum_{n=0}^\\infty \\frac{q^n}{(q; q)_n} = \\frac{1}{(q; q)_\\infty} = \\sum_{k=0}^\\infty p(k) q^k$.<br>"
-                    "**Combinatorial Meaning:** Each term $\\frac{q^n}{(q; q)_n}$ generates partitions whose **largest part is equal to $n$**.",
-                    unsafe_allow_html=True,
+                    "Setting $t = q$ yields:\n\n"
+                    r"$$\sum_{n=0}^\infty \frac{q^n}{(q; q)_n} = \frac{1}{(q; q)_\infty} = \sum_{k=0}^\infty p(k) q^k$$"
+                    "\n\n**Combinatorial Meaning:** Each term $\\frac{q^n}{(q; q)_n}$ generates partitions whose **largest part is equal to $n$**."
                 )
 
         with col_q2:
@@ -175,9 +174,9 @@ def render_module_3():
                 st.markdown("Replace $t \\to -t/a$ and take $a \\to \\infty$:")
                 st.latex(r"\sum_{n=0}^\infty \frac{q^{n(n-1)/2} t^n}{(q; q)_n} = (-t; q)_\infty")
                 st.markdown(
-                    "Setting $t = q$ yields $\\sum_{n=0}^\\infty \\frac{q^{n(n+1)/2}}{(q; q)_n} = (-q; q)_\\infty = \\sum_{k=0}^\\infty p(D, k) q^k$.<br>"
-                    "**Combinatorial Meaning:** Partitions into $n$ distinct parts decompose into a triangular staircase $\\Delta_n = n(n+1)/2$ plus at most $n$ parts.",
-                    unsafe_allow_html=True,
+                    "Setting $t = q$ yields:\n\n"
+                    r"$$\sum_{n=0}^\infty \frac{q^{n(n+1)/2}}{(q; q)_n} = (-q; q)_\infty = \sum_{k=0}^\infty p(D, k) q^k$$"
+                    "\n\n**Combinatorial Meaning:** Partitions into $n$ distinct parts decompose into a triangular staircase $\\Delta_n = n(n+1)/2$ plus at most $n$ parts."
                 )
 
         st.markdown("#### Interactive Verification of Corollaries 2.2 and 2.3")
@@ -312,7 +311,7 @@ def render_module_3():
             else:
                 st.warning(
                     f"⚠️ **Truncated Expansion (Incomplete)**: Since $d_{{\\max}} = {max_d_terms} < \\lfloor\\sqrt{{{max_deg_d}}}\\rfloor = {bound_info['min_required_d']}$, "
-                    f"this summation is exact **only for $0 \\le n \\le {bound_info['exact_up_to_degree']}$**.<br>"
+                    f"this summation is exact **only for $0 \\le n \\le {bound_info['exact_up_to_degree']}$**.\n\n"
                     f"For $n \\ge {bound_info['first_incomplete_degree']}$, partitions whose Durfee square has side $d \\ge {max_d_terms + 1}$ are omitted, resulting in strict deficits.",
                     icon="⚠️",
                 )
@@ -343,9 +342,9 @@ def render_module_3():
         render_defensible_findings(
             module_title="Module 3 — Series-Product Identities (Andrews Chapter 2)",
             questions_md=(
-                "(a) How does the formal power series topology in $\\mathbb{Z}[[q]]$ establish that truncated products match exact partition counts up to degree $N$?<br>"
-                "(b) How does Andrews's Theorem 2.1 (the $q$-binomial theorem) specialize into Euler's corollaries for partition generating functions?<br>"
-                "(c) What exact completeness threshold guarantees that the Durfee square series $\\sum_{d=0}^{d_{\\max}} \\frac{q^{d^2}}{(q; q)_d^2}$ matches $p(n)$?"
+                "1. How does the formal power series topology in $\\mathbb{Z}[[q]]$ establish that truncated products match exact partition counts up to degree $N$?\n\n"
+                "2. How does Andrews's Theorem 2.1 (the $q$-binomial theorem) specialize into Euler's corollaries for partition generating functions?\n\n"
+                "3. What exact completeness threshold guarantees that the Durfee square series $\\sum_{d=0}^{d_{\\max}} \\frac{q^{d^2}}{(q; q)_d^2}$ matches $p(n)$?"
             ),
             foundation_md=(
                 "George E. Andrews, *The Theory of Partitions* (Cambridge University Press), Chapter 2, "
@@ -354,16 +353,16 @@ def render_module_3():
                 "and eq. (2.2.9) (Durfee Square Expansion, p. 28)."
             ),
             method_md=(
-                "Evaluated using exact integer polynomial algebra in $\\mathbb{Z}[q]$ via synthetic convolution and division. "
+                "Evaluated using exact integer polynomial algebra in $\\mathbb{Z}[q] / (q^{N+1})$ via synthetic convolution and division. "
                 "No floating-point approximations or rounding errors are present. "
                 "Truncations are cross-checked against independent recursive partition counts and exact tables."
             ),
             deductions_md=(
-                "• **Formal Power Series Stabilization:** In $\\mathbb{Z}[[q]]$, expanding $M \\ge N$ factors produces exact coefficients "
-                "for all $0 \\le n \\le N$ because factors with index $k > M$ have valuation $v(q^k) = k > N$.<br>"
-                "• **q-Binomial Specializations:** Setting $a = 0, t = q$ in Theorem 2.1 recovers the partition generating function sorted by largest part. "
-                "Taking $a \\to \\infty, t = q$ yields distinct partitions sorted by triangular staircase $\\Delta_n = n(n+1)/2$.<br>"
-                "• **Dynamic Durfee Completeness:** Because the Durfee square side satisfies $d^2 \\le n$, summing up to $d_{\\max}$ captures all partitions "
+                "- **Formal Power Series Stabilization:** In $\\mathbb{Z}[[q]]$, expanding $M \\ge N$ factors produces exact coefficients "
+                "for all $0 \\le n \\le N$ because factors with index $k > M$ have valuation $v(q^k) = k > N$.\n\n"
+                "- **q-Binomial Specializations:** Setting $a = 0, t = q$ in Theorem 2.1 recovers the partition generating function sorted by largest part. "
+                "Taking $a \\to \\infty, t = q$ yields distinct partitions sorted by triangular staircase $\\Delta_n = n(n+1)/2$.\n\n"
+                "- **Dynamic Durfee Completeness:** Because the Durfee square side satisfies $d^2 \\le n$, summing up to $d_{\\max}$ captures all partitions "
                 "of $n$ whenever $(d_{\\max} + 1)^2 > n$. For $n \\ge (d_{\\max} + 1)^2$, coefficients exhibit strict deficits equal to the count of partitions with $d > d_{\\max}$."
             ),
             validation_md=(
